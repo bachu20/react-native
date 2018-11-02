@@ -9,6 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "faker": "^4.1.0",
+    "lodash": "^4.17.11",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4"
   },
