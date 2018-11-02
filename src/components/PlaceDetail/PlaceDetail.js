@@ -1,24 +1,24 @@
 import React from 'react'
 import {Modal, View, Image, Text, Button, StyleSheet} from 'react-native'
 
-const PlaceDetail = ({ modalActive, selectedPlace, toggleModal, deletePlace }) => {
-  const modalContent = !selectedPlace ? null : <View>
-    <Image style={styles.placeImage} source={selectedPlace.image} />
-    <Text style={styles.placeName}>{ selectedPlace.name }</Text>
+const PlaceDetail = ({ place, deletePlace, unselectPlace }) => {
+  const modalContent = !place ? null : <View>
+    <Image style={styles.placeImage} source={place.image} />
+    <Text style={styles.placeName}>{ place.name }</Text>
   </View>
 
   return (
     <Modal
-      onRequestClose={toggleModal}
+      onRequestClose={unselectPlace}
       style={styles.placeDetail}
       animationType="slide"
       transparent={false}
-      visible={modalActive}>
+      visible={!!place}>
       <View>
         {modalContent}
         <View>
-          <Button title='Delete' color='red' onPress={() => deletePlace(selectedPlace.key)} />
-          <Button title='Close' onPress={toggleModal} />
+          <Button title='Delete' color='red' onPress={() => deletePlace(place.key)} />
+          <Button title='Close' onPress={unselectPlace} />
         </View>
       </View>
     </Modal>
