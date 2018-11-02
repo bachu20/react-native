@@ -15,7 +15,14 @@ import PlaceInput from './src/components/PlaceInput/PlaceInput'
 import PlaceList from './src/components/PlaceList/PlaceList'
 import PlaceDetail from './src/components/PlaceDetail/PlaceDetail'
 
-import {addPlace, deletePlace, selectPlace, unselectPlace} from './src/store/actions/index'
+import {
+  addPlace,
+  deletePlace,
+  selectPlace,
+  unselectPlace,
+  likePlace,
+  dislikePlace
+} from './src/store/actions/index'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -27,7 +34,16 @@ const instructions = Platform.select({
 type Props = {};
 class App extends Component<Props> {
   render() {
-    const {places, selectedPlace, addPlace, deletePlace, selectPlace, unselectPlace} = this.props
+    const {
+      places,
+      selectedPlace,
+      addPlace,
+      deletePlace,
+      selectPlace,
+      unselectPlace,
+      likePlace,
+      dislikePlace
+    } = this.props
 
     return (
       <SafeAreaView style={styles.safeAreaView}>
@@ -36,6 +52,8 @@ class App extends Component<Props> {
             place={selectedPlace}
             deletePlace={deletePlace}
             unselectPlace={unselectPlace}
+            likePlace={likePlace}
+            dislikePlace={dislikePlace}
           />
           <PlaceInput addPlace={addPlace} />
           <PlaceList places={places} selectPlace={selectPlace} />
@@ -69,7 +87,9 @@ const mapDispatchToProps = dispatch => ({
   addPlace: (name) => dispatch(addPlace(name)),
   deletePlace: (key) => dispatch(deletePlace(key)),
   selectPlace: (key) => dispatch(selectPlace(key)),
-  unselectPlace: () => dispatch(unselectPlace())
+  unselectPlace: () => dispatch(unselectPlace()),
+  likePlace: (key) => dispatch(likePlace(key)),
+  dislikePlace: (key) => dispatch(dislikePlace(key))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
