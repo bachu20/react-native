@@ -1,11 +1,40 @@
 import seed from '../../util/seedPlaces'
-import {ADD_PLACE, DELETE_PLACE, SELECT_PLACE, UNSELECT_PLACE} from '../actions/constants'
+import {
+  ADD_PLACE,
+  DELETE_PLACE,
+  SELECT_PLACE,
+  UNSELECT_PLACE,
+  LIKE_PLACE,
+  DISLIKE_PLACE
+} from '../actions/constants'
 import _ from 'lodash'
 import { random } from 'faker'
 
+const samplePlaces = seed()
+const samplePlace = samplePlaces[0]
+
 const initialState = {
-  places: seed(),
-  selectedPlace: null
+  places: samplePlaces,
+  selectedPlace: samplePlace
+}
+
+/**
+ * @param {array} places
+ * @param {string} key
+ * @description used for like/dislike type cases to update place object within places array
+ */
+const getUpdatedPlaces = (places, key, target) => {
+  switch(target) {
+    case 'like': return _.map(places, p => {
+      return p.key === key ? _.assign(p, { likes: p.likes + 1 }) : p
+    })
+
+    case 'dislike': return _.map(places, p => {
+      return p.key === key ? _.assign(p, { dislikes: p.dislikes + 1 }) : p
+    })
+
+    default: return places
+  }
 }
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +58,16 @@ const reducer = (state = initialState, action) => {
     case UNSELECT_PLACE: return {
       ...state,
       selectedPlace: null
+    }
+
+    case LIKE_PLACE: return {
+      ...state,
+      places: getUpdatedPlaces(state.places, action.payload, 'like')
+    }
+
+    case DISLIKE_PLACE: return {
+      ...state,
+      places: getUpdatedPlaces(state.places, action.payload, 'dislike')
     }
 
     default:

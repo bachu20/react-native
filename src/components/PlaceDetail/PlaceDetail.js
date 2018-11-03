@@ -1,10 +1,28 @@
 import React from 'react'
-import {Modal, View, Image, Text, Button, StyleSheet} from 'react-native'
+import {Modal, View, Image, Text, Button, StyleSheet, TouchableOpacity} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { likePlace } from '../../store/actions/places';
 
-const PlaceDetail = ({ place, deletePlace, unselectPlace }) => {
+const PlaceDetail = ({ place, deletePlace, unselectPlace, likePlace, dislikePlace }) => {
   const modalContent = !place ? null : <View>
     <Image style={styles.placeImage} source={place.image} />
     <Text style={styles.placeName}>{ place.name }</Text>
+  </View>
+
+  const actionButtons = <View style={styles.actionContainer}>
+    <View style={styles.actionButtons}>
+      <TouchableOpacity style={styles.actionButton} onPress={() => dislikePlace(place.key)}>
+        <Icon size={30} name='md-thumbs-down' />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.actionButton} onPress={() => deletePlace(place.key)}>
+        <Icon size={30} name='md-trash' />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.actionButton} onPress={() => likePlace(place.key)}>
+        <Icon size={30} name='md-thumbs-up' />
+      </TouchableOpacity>
+    </View>
   </View>
 
   return (
@@ -16,10 +34,8 @@ const PlaceDetail = ({ place, deletePlace, unselectPlace }) => {
       visible={!!place}>
       <View>
         {modalContent}
-        <View>
-          <Button title='Delete' color='red' onPress={() => deletePlace(place.key)} />
-          <Button title='Close' onPress={unselectPlace} />
-        </View>
+        {actionButtons}
+        <Button title='Close' onPress={unselectPlace} />
       </View>
     </Modal>
   )
@@ -31,11 +47,22 @@ const styles = StyleSheet.create({
     height: 350
   },
   placeName: {
-    marginTop: 10,
-    marginBottom: 10,
+    margin: 10,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 28
+  },
+  actionContainer: {
+    alignItems: 'center'
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+  },
+  actionButton: {
+    margin: 10,
+    color: '#fff'
   }
 })
 

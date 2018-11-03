@@ -44,5 +44,5 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     width: '30%',
-  },
+  }
 })
