@@ -8,9 +8,8 @@ const PlaceList = ({ places, selectPlace }) => <FlatList
   data={places}
   renderItem={({ item }) => <ListItem
     key={item.key}
-    placeName={item.name}
-    placeImage={item.image}
-    selectPlace={() => selectPlace(item.key)}
+    place={item}
+    selectPlace={selectPlace}
   />}
 />
 
