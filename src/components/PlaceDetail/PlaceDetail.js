@@ -11,16 +11,16 @@ const PlaceDetail = ({ place, deletePlace, unselectPlace, likePlace, dislikePlac
 
   const actionButtons = <View style={styles.actionContainer}>
     <View style={styles.actionButtons}>
-      <TouchableOpacity style={styles.actionButton} onPress={() => dislikePlace(place.key)}>
-        <Icon size={30} name='md-thumbs-down' />
-      </TouchableOpacity>
-
       <TouchableOpacity style={styles.actionButton} onPress={() => deletePlace(place.key)}>
         <Icon size={30} name='md-trash' />
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.actionButton} onPress={() => dislikePlace(place.key)}>
+        <Icon size={30} name='md-sad' />
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.actionButton} onPress={() => likePlace(place.key)}>
-        <Icon size={30} name='md-thumbs-up' />
+        <Icon size={30} name='md-happy' />
       </TouchableOpacity>
     </View>
   </View>
